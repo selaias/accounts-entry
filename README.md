@@ -11,7 +11,6 @@ version: 1.0.2
 
 # accounts-entry
 
-[![Build Status](https://travis-ci.org/Differential/accounts-entry.png)](https://travis-ci.org/Differential/accounts-entry)
 
 accounts-entry is a meteorite package that relies on Iron Router and provides an
 alternative interface to accounts-ui, with whole pages for sign up

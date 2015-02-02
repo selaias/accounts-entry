@@ -4,7 +4,7 @@
   {{else}}
 
     {{#wrapLinksLi}}
-      <a href="{{pathFor 'entrySignIn'}}">{{{beforeSignIn}}}{{t9n "signIn"}}</a>
+      <a href="{{pathFor 'entrySignIn'}}">{{{beforeSignIn}}}{{i18n "signIn"}}</a>
     {{/wrapLinksLi}}
 
     {{#unless wrapLinks}}
@@ -13,7 +13,7 @@
 
     {{#if showCreateAccountLink}}
       {{#wrapLinksLi}}
-        <a href="{{entrySignUp}}">{{{beforeSignUp}}}{{t9n "signUp"}}</a>
+        <a href="{{entrySignUp}}">{{{beforeSignUp}}}{{i18n "signUp"}}</a>
       {{/wrapLinksLi}}
     {{/if}}
   {{/if}}

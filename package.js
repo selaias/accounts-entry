@@ -23,9 +23,9 @@ Package.onUse(function(api) {
 
 
   api.addFiles([
-    'client/entry.js',
-    'client/entry.less',
-    'client/helpers.js',
+    'client/lib/entry.js',
+    'client/css/entry.less',
+    'client/lib/helpers.js',
     'client/views/signIn/signIn.html',
     'client/views/signIn/signIn.js',
     'client/views/signUp/signUp.html',

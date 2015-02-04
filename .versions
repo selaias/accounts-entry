@@ -30,7 +30,7 @@ iron:url@1.0.7
 jquery@1.11.3
 json@1.0.2
 less@1.0.12
-local-test:selaias:accounts-entry@0.3.0
+local-test:selaias:accounts-entry@0.3.1
 localstorage@1.0.2
 logging@1.0.6
 meteor@1.1.4
@@ -46,8 +46,8 @@ reactive-dict@1.0.5
 reactive-var@1.0.4
 retry@1.0.2
 routepolicy@1.0.4
-selaias:accounts-entry@0.3.0
-selaias:alerts@0.2.1
+selaias:accounts-entry@0.3.1
+selaias:alerts@0.3.1
 service-configuration@1.0.3
 session@1.0.5
 sha@1.0.2

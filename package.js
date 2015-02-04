@@ -1,14 +1,16 @@
 Package.describe({
   summary: "Make signin and signout their own pages with routes (in javascript)",
-  version: '0.3.0',
+  version: '0.3.1',
   name: "selaias:accounts-entry",
   githubUrl: 'https://github.com/selaias/accounts-entry',
 });
 
 Package.onUse(function(api) {
-  api.versionsFrom("1.0.2");
+  api.versionsFrom("1.0.1");
 
-  api.use(['iron:router@1.0.3', 'anti:i18n@0.4.3', 'selaias:alerts@0.2.1'], ['client', 'server']);
+  api.use('selaias:alerts@0.3.1', 'client');
+  
+  api.use(['iron:router@1.0.3', 'anti:i18n@0.4.3'], ['client', 'server']);
   // CLIENT
   api.use([
     'deps',

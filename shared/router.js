@@ -2,6 +2,8 @@ var exclusions;
 
 Router.route("entrySignIn", {
   path: "/sign-in",
+  name: 'entrySignIn',
+  template: 'entrySignIn',
   onBeforeAction: function() {
     Alerts.clear();
     Session.set('buttonText', 'in');
@@ -32,6 +34,8 @@ Router.route("entrySignIn", {
 });
 Router.route("entrySignUp", {
   path: "/sign-up",
+  name: 'entrySignUp',
+  template: 'entrySignUp',
   onBeforeAction: function() {
     Alerts.clear();
     Session.set('buttonText', 'up');
@@ -59,6 +63,8 @@ Router.route("entrySignUp", {
 });
 Router.route("entryForgotPassword", {
   path: "/forgot-password",
+  name: 'entryForgotPassword',
+  template: 'entryForgotPassword',
   onBeforeAction: function() {
     Alerts.clear();
     this.next();
@@ -66,20 +72,21 @@ Router.route("entryForgotPassword", {
 });
 Router.route('entrySignOut', {
   path: '/sign-out',
+  name: 'entrySignOut',
   template: 'entrySignOut',
   onBeforeAction: function() {
     Alerts.clear();
     if (AccountsEntry.settings.homeRoute) {
       Meteor.logout();
+      Router.go(AccountsEntry.settings.homeRoute);
     }
     this.next();
-  },
-  onAfterAction: function() {
-    Router.go(AccountsEntry.settings.homeRoute);
   }
 });
 Router.route('entryResetPassword', {
   path: 'reset-password/:resetToken',
+  name: 'entryResetPassword',
+  template: 'entryResetPassword',
   onBeforeAction: function() {
     Alerts.clear();
     Session.set('resetToken', this.params.resetToken);
@@ -94,8 +101,7 @@ _.each(Router.routes, function(route) {
 });
 
 Router.onStop(function() {
-  var _ref;
-  if (!_.contains(exclusions, (_ref = Router.current().route) !== null ? _ref.getName() : undefined)) {
+  if (!_.contains(exclusions, (Router.current().route) !== null ? Router.current().path : undefined)) {
     Session.set('fromWhere', Router.current().path);
   }
 });

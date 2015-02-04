@@ -1,6 +1,6 @@
 Package.describe({
-  summary: "Make signin and signout their own pages with routes (converted in javascript)",
-  version: '0.1.0',
+  summary: "Make signin and signout their own pages with routes (in javascript)",
+  version: '0.2.1',
   name: "selaias:accounts-entry",
   githubUrl: 'https://github.com/selaias/accounts-entry',
 });
@@ -8,7 +8,7 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom("METEOR@0.9.0");
 
-  api.use(['iron:router@1.0.3', 'anti:i18n@0.4.3', 'selaias:alerts'], ['client', 'server']);
+  api.use(['iron:router@1.0.3', 'anti:i18n@0.4.3', 'selaias:alerts@0.2.1'], ['client', 'server']);
   // CLIENT
   api.use([
     'deps',
@@ -87,7 +87,7 @@ Package.onTest(function (api) {
            'test-helpers',
            'templating',
            'mongo-livedata']);
-  api.use(['iron:router', 'anti:i18n@0.4.3', 'selaias:alerts'], ['client', 'server']);
+  api.use(['iron:router', 'anti:i18n@0.4.3', 'selaias:alerts@0.2.1'], ['client', 'server']);
   api.use('selaias:accounts-entry');
 
   api.addFiles(['tests/route.js', 'tests/client.html', 'tests/client.js'], 'client');

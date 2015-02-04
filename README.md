@@ -87,7 +87,7 @@ Since this is a young package, we are maintaining compatibility with accounts-ui
       homeRoute: '/',                            // mandatory - path to redirect to after sign-out
       dashboardRoute: '/dashboard',              // mandatory - path to redirect to after successful sign-in
       profileRoute: 'profile',                   // if set adds link to User Profile
-      passwordSignupFields: 'EMAIL_ONLY',        // 
+      passwordSignupFields: 'EMAIL_ONLY',        // One of 'USERNAME_AND_EMAIL', 'USERNAME_AND_OPTIONAL_EMAIL', 'USERNAME_ONLY', or 'EMAIL_ONLY' (default).
       showSignupCode: true,                      // when true you need to set the 'signupCode' setting in the server (see below)
       showOtherLoginServices: true,              // Set to false to hide oauth login buttons on the signin/signup pages. Useful if you are using something like accounts-meld or want to oauth for api access
       passwordminLength: 7,                      // Password minimun lenght

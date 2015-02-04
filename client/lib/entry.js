@@ -40,15 +40,20 @@ AccountsEntry = {
     if (extraCondition === null) {
       extraCondition = true;
     }
-    if (!Meteor.loggingIn()) {
-      if (Meteor.user() && extraCondition) {
-        return router.next();
-      } else {
+    if (!Meteor.user()){
         Session.set('fromWhere', router.url);
-        Router.go('/sign-in');
+        Router.go('entrySignIn');
         Session.set('entryError', i18n('error.signInRequired'));
-        return router.next();
-      }
     }
+//     if (!Meteor.loggingIn()) {
+//       if (Meteor.user() && extraCondition) {
+//         router.next();
+//       } else {
+//         Session.set('fromWhere', router.url);
+//         router.render('entrySignIn');
+//         Session.set('entryError', i18n('error.signInRequired'));
+// //        router.next();
+//       }
+//     }
   }
 };

@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Make signin and signout their own pages with routes (in javascript)",
-  version: '0.3.1',
+  version: '0.3.2',
   name: "selaias:accounts-entry",
   githubUrl: 'https://github.com/selaias/accounts-entry',
 });

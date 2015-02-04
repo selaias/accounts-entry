@@ -11,9 +11,7 @@ Template.entrySocial.helpers({
     }
   },
   unconfigured: function() {
-    return ServiceConfiguration.configurations.find({
-      service: this.toString()
-    }).fetch().length === 0;
+    return ServiceConfiguration.configurations.find({service: this.toString()}).fetch().length === 0;
   },
   google: function() {
     if (this[0] === 'g' && this[1] === 'o') {
@@ -41,16 +39,16 @@ Template.entrySocial.events({
       if (!err) {
         if (Session.get('fromWhere')) {
           Router.go(Session.get('fromWhere'));
-          return Session.set('fromWhere', void 0);
+          Session.set('fromWhere', void 0);
         } else {
-          return Router.go(AccountsEntry.settings.dashboardRoute);
+          Router.go(AccountsEntry.settings.dashboardRoute);
         }
       } else if (err instanceof Accounts.LoginCancelledError) {
 
       } else if (err instanceof ServiceConfiguration.ConfigError) {
-        return Accounts._loginButtonsSession.configureService(serviceName);
+        Accounts._loginButtonsSession.configureService(serviceName);
       } else {
-        return Accounts._loginButtonsSession.errorMessage(err.reason || i18n("error.unknown"));
+        Accounts._loginButtonsSession.errorMessage(err.reason || i18n("error.unknown"));
       }
     };
     if (serviceName === 'meteor-developer') {

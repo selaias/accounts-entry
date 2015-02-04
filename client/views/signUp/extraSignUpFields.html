@@ -1,19 +1,19 @@
 <template name="entryExtraSignUpFields">
-    {{#each extraSignUpFields}}
-    {{> _entryExtraSignUpField}}
-    {{/each}}
+  {{#each extraSignUpFields}}
+  {{> _entryExtraSignUpField}}
+  {{/each}}
 </template>
 
 <template name="_entryExtraSignUpField">
-    {{#if isTextField }}
-    <div class="form-group">
-        {{text_field field type=type required=required label=label placeholder=placeholder }}
-    </div>
-    {{/if}}
+  {{#if isTextField }}
+  <div class="form-group">
+    {{{htmlText}}}
+  </div>
+  {{/if}}
 
-    {{#if isCheckbox}}
-    <div class="checkbox">
-        {{check_box name label=label required=required}}
-    </div>
-    {{/if}}
+  {{#if isCheckbox}}
+  <div class="checkbox">
+    {{{htmlCheckBox}}}
+  </div>
+  {{/if}}
 </template>

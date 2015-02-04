@@ -17,8 +17,10 @@ Meteor.startup(function() {
     },
     entryCreateUser: function(user) {
       var profile, userId;
+
       check(user, Object);
       profile = AccountsEntry.settings.defaultProfile || {};
+
       if (user.username) {
         userId = Accounts.createUser({
           username: user.username,
@@ -27,14 +29,10 @@ Meteor.startup(function() {
           profile: _.extend(profile, user.profile)
         });
       } else {
-        userId = Accounts.createUser({
-          email: user.email,
-          password: user.password,
-          profile: _.extend(profile, user.profile)
-        });
+        userId = Accounts.createUser({email: user.email, password: user.password, profile: _.extend(profile, user.profile)});
       }
       if (user.email && Accounts._options.sendVerificationEmail) {
-        return Accounts.sendVerificationEmail(userId, user.email);
+        Accounts.sendVerificationEmail(userId, user.email);
       }
     }
   });

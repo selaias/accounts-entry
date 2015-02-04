@@ -11,26 +11,30 @@ Template.entryResetPassword.events({
   'submit #resetPassword': function(event) {
     var password, passwordErrors;
     event.preventDefault();
+    Alerts.clear();
     password = $('input[type="password"]').val();
     passwordErrors = (function(password) {
-      var errMsg, msg;
+      var errMsg, msg, minLength;
       errMsg = [];
       msg = false;
-      if (password.length < 7) {
+
+      minLength = AccountsEntry.settings.minLength !== null ? AccountsEntry.settings.minLength : 7;
+
+      if (password.length < minLength) {
         errMsg.push(i18n("error.minChar"));
       }
-      if (password.search(/[a-z]/i) < 0) {
+      if (password.search(/[a-z]/i) < 0 && AccountsEntry.settings.requireOneAlpha) {
         errMsg.push(i18n("error.pwOneLetter"));
       }
-      if (password.search(/[0-9]/) < 0) {
+      if (password.search(/[0-9]/) < 0 && AccountsEntry.settings.requireOneDigit) {
         errMsg.push(i18n("error.pwOneDigit"));
       }
       if (errMsg.length > 0) {
         msg = "";
         errMsg.forEach(function(e) {
-          return msg || msg.concat(e + "\r\n");
+          msg +=msg.concat(e + "\r\n");
+          Alerts.add(e, 'danger')
         });
-        Session.set('entryError', msg);
         return true;
       }
       return false;
@@ -38,12 +42,13 @@ Template.entryResetPassword.events({
     if (passwordErrors) {
       return;
     }
-    return Accounts.resetPassword(Session.get('resetToken'), password, function(error) {
+    Accounts.resetPassword(Session.get('resetToken'), password, function(error) {
       if (error) {
-        return Session.set('entryError', error.reason || "Unknown error");
+         Alerts.add(error.reason || "Unknown error", 'danger')
       } else {
         Session.set('resetToken', null);
-        return Router.go(AccountsEntry.settings.dashboardRoute);
+        Router.go(AccountsEntry.settings.dashboardRoute);
+        Alerts.add(i18n('info.passwordReset'), 'success');
       }
     });
   }

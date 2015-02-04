@@ -48,68 +48,76 @@ AccountsEntry.entrySignUpEvents = {
   'submit #signUp': function(event, t) {
     var email, emailRequired, extraFields, fields, filteredExtraFields, formValues, password, passwordErrors, signupCode, trimInput, username, usernameRequired;
     event.preventDefault();
-    username = t.find('input[name="username"]') ? t.find('input[name="username"]').value.toLowerCase() : void 0;
+    Alerts.clear();
+    username = t.find('input[name="username"]') ? t.find('input[name="username"]').value.toLowerCase() : undefined;
     if (username && AccountsEntry.settings.usernameToLower) {
       username = username.toLowerCase();
     }
-    signupCode = t.find('input[name="signupCode"]') ? t.find('input[name="signupCode"]').value : void 0;
+    signupCode = t.find('input[name="signupCode"]') ? t.find('input[name="signupCode"]').value :undefined;
     trimInput = function(val) {
       return val.replace(/^\s*|\s*$/g, "");
     };
-    email = t.find('input[type="email"]') ? trimInput(t.find('input[type="email"]').value) : void 0;
+    email = t.find('input[type="email"]') ? trimInput(t.find('input[type="email"]').value) : undefined;
     if (AccountsEntry.settings.emailToLower && email) {
       email = email.toLowerCase();
     }
     formValues = SimpleForm.processForm(event.target);
+
     extraFields = _.pluck(AccountsEntry.settings.extraSignUpFields, 'field');
     filteredExtraFields = _.pick(formValues, extraFields);
+
     password = t.find('input[type="password"]').value;
     fields = AccountsEntry.settings.passwordSignupFields;
     passwordErrors = (function(password) {
-      var errMsg, msg;
+      var errMsg, msg, minLength;
       errMsg = [];
       msg = false;
-      if (password.length < 7) {
+
+      minLength = AccountsEntry.settings.minLength !== null ? AccountsEntry.settings.minLength : 7;
+
+      if (password.length < minLength) {
         errMsg.push(i18n("error.minChar"));
       }
-      if (password.search(/[a-z]/i) < 0) {
+      if (password.search(/[a-z]/i) < 0 && AccountsEntry.settings.requireOneAlpha) {
         errMsg.push(i18n("error.pwOneLetter"));
       }
-      if (password.search(/[0-9]/) < 0) {
+      if (password.search(/[0-9]/) < 0 && AccountsEntry.settings.requireOneDigit) {
         errMsg.push(i18n("error.pwOneDigit"));
       }
       if (errMsg.length > 0) {
         msg = "";
         errMsg.forEach(function(e) {
-          return msg || msg.concat(e + "\r\n");
+          msg +=msg.concat(e + "\r\n");
+          Alerts.add(e, 'danger')
         });
-        Session.set('entryError', msg);
+
         return true;
       }
       return false;
     })(password);
+
     if (passwordErrors) {
       return;
     }
     emailRequired = _.contains(['USERNAME_AND_EMAIL', 'EMAIL_ONLY'], fields);
     usernameRequired = _.contains(['USERNAME_AND_EMAIL', 'USERNAME_ONLY'], fields);
     if (usernameRequired && username.length === 0) {
-      Session.set('entryError', i18n("error.usernameRequired"));
+      Alerts.add(i18n("error.usernameRequired"), 'danger');
       return;
     }
     if (username && AccountsEntry.isStringEmail(username)) {
-      Session.set('entryError', i18n("error.usernameIsEmail"));
+      Alerts.add(i18n("error.usernameIsEmail"), 'danger');
       return;
     }
     if (emailRequired && email.length === 0) {
-      Session.set('entryError', i18n("error.emailRequired"));
+      Alerts.add(i18n("error.emailRequired"), 'danger');
       return;
     }
     if (AccountsEntry.settings.showSignupCode && signupCode.length === 0) {
-      Session.set('entryError', i18n("error.signupCodeRequired"));
+      Alerts.add(i18n("error.signupCodeRequired"), 'danger');
       return;
     }
-    return Meteor.call('entryValidateSignupCode', signupCode, function(err, valid) {
+    Meteor.call('entryValidateSignupCode', signupCode, function(err, valid) {
       var newUserData;
       if (valid) {
         newUserData = {
@@ -118,30 +126,27 @@ AccountsEntry.entrySignUpEvents = {
           password: AccountsEntry.hashPassword(password),
           profile: filteredExtraFields
         };
-        return Meteor.call('entryCreateUser', newUserData, function(err, data) {
+        Meteor.call('entryCreateUser', newUserData, function(err, data) {
           var isEmailSignUp, userCredential;
           if (err) {
-            console.log(err);
-            i18nHelper.accountsError(err);
+            Alerts.add(err.reason, 'danger');
             return;
           }
           isEmailSignUp = _.contains(['USERNAME_AND_EMAIL', 'EMAIL_ONLY'], AccountsEntry.settings.passwordSignupFields);
           userCredential = isEmailSignUp ? email : username;
-          return Meteor.loginWithPassword(userCredential, password, function(error) {
+          Meteor.loginWithPassword(userCredential, password, function(error) {
             if (error) {
-              console.log(error);
-              return i18nHelper.accountsError(error);
+              Alerts.add(error.reason, 'danger');
             } else if (Session.get('fromWhere')) {
               Router.go(Session.get('fromWhere'));
-              return Session.set('fromWhere', void 0);
+              Session.set('fromWhere', null);
             } else {
-              return Router.go(AccountsEntry.settings.dashboardRoute);
+              Router.go(AccountsEntry.settings.dashboardRoute);
             }
           });
         });
       } else {
-        console.log(err);
-        Session.set('entryError', i18n("error.signupCodeIncorrect"));
+        Alerts.add(i18n("error.signupCodeIncorrect"), 'danger');
       }
     });
   }

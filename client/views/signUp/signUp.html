@@ -26,7 +26,7 @@
         {{else}}
             <p class="entry-signin-cta">{{i18n "ifYouAlreadyHaveAnAccount"}} <a href="{{pathFor 'entrySignIn'}}">{{i18n "signin"}}</a>.</p>
         {{/if}}
-        {{> entryError}}
+        {{> alerts}}
         {{#if passwordLoginService}}
           <form class="entry-form {{signupClass}}" id='signUp'>
             {{#if showUsername}}

@@ -28,6 +28,12 @@ var en = {
   and: "and",
   "Match failed": "Match failed",
   "User not found": "User not found",
+  info:{
+    emailSent: "Email sent",
+    emailVerified: "Email verified",
+    passwordChanged: "Password changed",
+    passwordReset: "Password reset",
+  },
   error: {
     minChar: "7 character minimum password.",
     pwOneLetter: "Password requires 1 letter.",

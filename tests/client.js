@@ -3,7 +3,7 @@ var renderToDiv;
 renderToDiv = function(comp) {
   var div;
   div = document.createElement("DIV");
-  Blaze.render(comp).attach(div);
+  Blaze.render(comp, div);
   return div;
 };
 
@@ -46,7 +46,7 @@ Tinytest.add("Accounts Entry - wrapLinks setting off should show 'or span'", fun
   AccountsEntry.settings.wrapLinks = false;
   div = renderToDiv(Template.test_helper_account_buttons);
   html = canonicalizeHtml(div.innerHTML);
-  return test.include(html, '<span>or</span>');
+   test.include(html, '<span>or</span>');
 });
 
 Tinytest.add("Accounts Entry - forgot password link should not show up if username only is set", function(test) {
@@ -56,19 +56,4 @@ Tinytest.add("Accounts Entry - forgot password link should not show up if userna
   html = canonicalizeHtml(div.innerHTML);
   scan = html.indexOf('<a href="/forgot-password">');
   return test.equal(scan, -1, "Forgot password link should not show up if username only is set");
-});
-
-Tinytest.add("Accounts Entry - adding extra fields to the layout", function(test) {
-  var div, html;
-  AccountsEntry.settings.extraSignUpFields = [
-    {
-      field: 'zipcode',
-      required: true,
-      type: 'number'
-    }
-  ];
-  Package['accounts-password'] = true;
-  div = renderToDiv(Template.test_helper_sign_up);
-  html = canonicalizeHtml(div.innerHTML);
-  return test.include(html, '<div class="form-group"><label for="zipcode">Zipcode</label><input class="form-control" id="zipcode" name="zipcode" required="" type="number" value=""></div>');
 });

@@ -10,18 +10,18 @@ Template.entryForgotPassword.helpers({
 Template.entryForgotPassword.events({
   'submit #forgotPassword': function(event) {
     event.preventDefault();
+    Alerts.clear();
     Session.set('email', $('input[name="forgottenEmail"]').val());
     if (Session.get('email').length === 0) {
-      Session.set('entryError', 'Email is required');
+       Alerts.add(i18n('error.emailRequired'), 'danger');
       return;
     }
-    return Accounts.forgotPassword({
-      email: Session.get('email')
-    }, function(error) {
+    Accounts.forgotPassword({email: Session.get('email')}, function(error) {
       if (error) {
-        return Session.set('entryError', error.reason);
+         Alerts.add(error.reason, 'danger');
       } else {
-        return Router.go(AccountsEntry.settings.homeRoute);
+        Router.go(AccountsEntry.settings.homeRoute);
+        Alerts.add(i18n('info.emailSent'), 'success');
       }
     });
   }

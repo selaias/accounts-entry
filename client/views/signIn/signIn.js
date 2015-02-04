@@ -28,26 +28,26 @@ AccountsEntry.entrySignInEvents = {
   'submit #signIn': function(event) {
     var email;
     event.preventDefault();
+    Alerts.clear();
     email = $('input[name="email"]').val();
     if ((AccountsEntry.isStringEmail(email) && AccountsEntry.settings.emailToLower) || (!AccountsEntry.isStringEmail(email) && AccountsEntry.settings.usernameToLower)) {
       email = email.toLowerCase();
     }
     Session.set('email', email);
     Session.set('password', $('input[name="password"]').val());
-    return Meteor.loginWithPassword(Session.get('email'), Session.get('password'), function(error) {
-      Session.set('password', void 0);
+    Meteor.loginWithPassword(Session.get('email'), Session.get('password'), function(error) {
+      Session.set('password', null);
       if (error) {
-        return i18nHelper.accountsError(error);
+        Alerts.add(error, 'danger')
       } else if (Session.get('fromWhere')) {
         Router.go(Session.get('fromWhere'));
-        return Session.set('fromWhere', void 0);
+        Session.set('fromWhere',null);
       } else {
-        return Router.go(AccountsEntry.settings.dashboardRoute);
+        Router.go(AccountsEntry.settings.dashboardRoute);
       }
     });
   }
 };
 
 Template.entrySignIn.helpers(AccountsEntry.entrySignInHelpers);
-
 Template.entrySignIn.events(AccountsEntry.entrySignInEvents);

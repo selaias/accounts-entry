@@ -3,9 +3,9 @@ var exclusions;
 Router.route("entrySignIn", {
   path: "/sign-in",
   onBeforeAction: function() {
-    Session.set('entryError', void 0);
+    Alerts.clear();
     Session.set('buttonText', 'in');
-    return this.next();
+    this.next();
   },
   onRun: function() {
     var pkgRendered, userRendered;
@@ -27,15 +27,15 @@ Router.route("entrySignIn", {
       Template[this.template].events(AccountsEntry.entrySignInEvents);
       Template[this.template].helpers(AccountsEntry.entrySignInHelpers);
     }
-    return this.next();
+    this.next();
   }
 });
 Router.route("entrySignUp", {
   path: "/sign-up",
   onBeforeAction: function() {
-    Session.set('entryError', void 0);
+    Alerts.clear();
     Session.set('buttonText', 'up');
-    return this.next();
+    this.next();
   },
   onRun: function() {
     var pkgRendered, userRendered;
@@ -46,7 +46,7 @@ Router.route("entrySignUp", {
       if (userRendered) {
         Template[this.template].rendered = function() {
           pkgRendered.call(this);
-          return userRendered.call(this);
+          userRendered.call(this);
         };
       } else {
         Template[this.template].rendered = pkgRendered;
@@ -54,34 +54,36 @@ Router.route("entrySignUp", {
       Template[this.template].events(AccountsEntry.entrySignUpEvents);
       Template[this.template].helpers(AccountsEntry.entrySignUpHelpers);
     }
-    return this.next();
+    this.next();
   }
 });
 Router.route("entryForgotPassword", {
   path: "/forgot-password",
   onBeforeAction: function() {
-    Session.set('entryError', void 0);
-    return this.next();
+    Alerts.clear();
+    this.next();
   }
 });
 Router.route('entrySignOut', {
   path: '/sign-out',
+  template: 'entrySignOut',
   onBeforeAction: function() {
-    Session.set('entryError', void 0);
+    Alerts.clear();
     if (AccountsEntry.settings.homeRoute) {
-      Meteor.logout(function() {
-        return Router.go(AccountsEntry.settings.homeRoute);
-      });
+      Meteor.logout();
     }
-    return this.next();
+    this.next();
+  },
+  onAfterAction: function() {
+    Router.go(AccountsEntry.settings.homeRoute);
   }
 });
 Router.route('entryResetPassword', {
   path: 'reset-password/:resetToken',
   onBeforeAction: function() {
-    Session.set('entryError', void 0);
+    Alerts.clear();
     Session.set('resetToken', this.params.resetToken);
-    return this.next();
+    this.next();
   }
 });
 
@@ -93,7 +95,7 @@ _.each(Router.routes, function(route) {
 
 Router.onStop(function() {
   var _ref;
-  if (!_.contains(exclusions, (_ref = Router.current().route) !== null ? _ref.getName() : void 0)) {
-    return Session.set('fromWhere', Router.current().path);
+  if (!_.contains(exclusions, (_ref = Router.current().route) !== null ? _ref.getName() : undefined)) {
+    Session.set('fromWhere', Router.current().path);
   }
 });

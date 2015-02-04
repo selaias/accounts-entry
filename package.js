@@ -1,14 +1,14 @@
 Package.describe({
-    summary: "Make signin and signout their own pages with routes (converted in javascript)",
-    version: '0.1.0',
-    name: "selaias:accounts-entry",
-    githubUrl: 'https://github.com/selaias/accounts-entry',
+  summary: "Make signin and signout their own pages with routes (converted in javascript)",
+  version: '0.1.0',
+  name: "selaias:accounts-entry",
+  githubUrl: 'https://github.com/selaias/accounts-entry',
 });
 
 Package.onUse(function(api) {
   api.versionsFrom("METEOR@0.9.0");
 
-  api.use(['iron:router@1.0.3', 'anti:i18n@0.4.3'], ['client', 'server']);
+  api.use(['iron:router@1.0.3', 'anti:i18n@0.4.3', 'selaias:alerts'], ['client', 'server']);
   // CLIENT
   api.use([
     'deps',
@@ -24,6 +24,7 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'client/lib/entry.js',
+    'client/lib/simpleform.js',
     'client/css/entry.less',
     'client/lib/helpers.js',
     'client/views/signIn/signIn.html',
@@ -38,8 +39,6 @@ Package.onUse(function(api) {
     'client/views/resetPassword/resetPassword.js',
     'client/views/social/social.html',
     'client/views/social/social.js',
-    'client/views/error/error.html',
-    'client/views/error/error.js',
     'client/views/accountButtons/accountButtons.html',
     'client/views/accountButtons/_wrapLinks.html',
     'client/views/accountButtons/signedIn.html',
@@ -58,10 +57,13 @@ Package.onUse(function(api) {
   // CLIENT and SERVER
   api.imply('accounts-base', ['client', 'server']);
   api.imply('accounts-password', ['client', 'server']);
+
   api.export('AccountsEntry', ['client', 'server']);
-  
+  api.export('SimpleForm', ['client', 'server']);
+
   api.addFiles([
     'shared/router.js',
+
     'shared/i18n/i18n_ar.js',
     'shared/i18n/i18n_de.js',
     'shared/i18n/i18n_el.js',
@@ -80,13 +82,12 @@ Package.onUse(function(api) {
 
 Package.onTest(function (api) {
   api.use(['tinytest',
-            'underscore',
-            'handlebars',
-            'test-helpers',
-            'templating',
-            'mongo-livedata',
-            ]);
-  api.use(['iron:router', 'anti:i18n@0.4.3'], ['client', 'server']);
+           'underscore',
+           'handlebars',
+           'test-helpers',
+           'templating',
+           'mongo-livedata']);
+  api.use(['iron:router', 'anti:i18n@0.4.3', 'selaias:alerts'], ['client', 'server']);
   api.use('selaias:accounts-entry');
 
   api.addFiles(['tests/route.js', 'tests/client.html', 'tests/client.js'], 'client');

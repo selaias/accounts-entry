@@ -49,5 +49,4 @@ Template.entryAccountButtons.helpers({
     }
   }
 });
-
 Template.entrySignedIn.helpers(entryAccountButtonsHelpers);

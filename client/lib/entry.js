@@ -1,4 +1,6 @@
-var AccountsEntry;
+if (typeof AccountsEntry === "undefined") {
+  AccountsEntry = {};
+}
 
 AccountsEntry = {
   settings: {
@@ -49,20 +51,3 @@ AccountsEntry = {
     }
   }
 };
-
-this.AccountsEntry = AccountsEntry;
-
-// this.i18nHelper = (function() {
-//   function i18nHelper() {}
-
-//   i18nHelper.translate = function(code) {
-//     return i18n.get(code, "error.accounts");
-//   };
-
-//   i18nHelper.accountsError = function(err) {
-//     return Session.set('entryError', this.translate(err.reason));
-//   };
-
-//   return i18nHelper;
-
-// })();

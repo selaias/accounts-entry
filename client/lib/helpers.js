@@ -44,6 +44,11 @@ UI.registerHelper('showSignupCode', function() {
   return AccountsEntry.settings.showSignupCode === true;
 });
 
+UI.registerHelper('showPasswordConfirmation', function() {
+  return AccountsEntry.settings.requirePasswordConfirmation === true;
+});
+
+
 UI.registerHelper('passwordLoginService', function() {
   return !!Package['accounts-password'];
 });

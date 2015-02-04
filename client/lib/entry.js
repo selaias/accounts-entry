@@ -12,7 +12,8 @@ AccountsEntry = {
     usernameToLower: false,
     entrySignUp: '/sign-up',
     extraSignUpFields: [],
-    showOtherLoginServices: true
+    showOtherLoginServices: true,
+    requirePasswordConfirmation: true,
   },
   isStringEmail: function(email) {
     var emailPattern;

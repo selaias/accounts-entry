@@ -12,14 +12,20 @@ Template.entryResetPassword.events({
     var password, passwordErrors;
     event.preventDefault();
     Alerts.clear();
-    password = $('input[type="password"]').val();
+    password = $('input[name="new-password"]').val()
     passwordErrors = (function(password) {
-      var errMsg, msg, minLength;
+      var errMsg, msg, minLength, passwordConfirmed;
       errMsg = [];
       msg = false;
 
       minLength = AccountsEntry.settings.minLength !== null ? AccountsEntry.settings.minLength : 7;
 
+      if (AccountsEntry.settings.requirePasswordConfirmation) {
+        passwordConfirmed = $('input[name="new-passwordConfirmed"]').val();
+        if (password !== passwordConfirmed) {
+          errMsg.push(i18n("error.pwNoMatch"));
+        }
+      }
       if (password.length < minLength) {
         errMsg.push(i18n("error.minChar"));
       }
@@ -44,7 +50,7 @@ Template.entryResetPassword.events({
     }
     Accounts.resetPassword(Session.get('resetToken'), password, function(error) {
       if (error) {
-         Alerts.add(error.reason || "Unknown error", 'danger')
+        Alerts.add(error.reason || "Unknown error", 'danger')
       } else {
         Session.set('resetToken', null);
         Router.go(AccountsEntry.settings.dashboardRoute);

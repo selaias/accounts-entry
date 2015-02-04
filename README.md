@@ -81,19 +81,20 @@ Since this is a young package, we are maintaining compatibility with accounts-ui
 ```js
   Meteor.startup(function () {
     AccountsEntry.config({
-      logo: 'logo.png',                  // if set displays logo above sign-in options
-      privacyUrl: '/privacy-policy',     // if set adds link to privacy policy and 'you agree to ...' on sign-up page
-      termsUrl: '/terms-of-use',         // if set adds link to terms  'you agree to ...' on sign-up page
-      homeRoute: '/',                    // mandatory - path to redirect to after sign-out
-      dashboardRoute: '/dashboard',      // mandatory - path to redirect to after successful sign-in
-      profileRoute: 'profile',
-      passwordSignupFields: 'EMAIL_ONLY',
-      showSignupCode: true,
-      showOtherLoginServices: true,      // Set to false to hide oauth login buttons on the signin/signup pages. Useful if you are using something like accounts-meld or want to oauth for api access
-      passwordminLength: 7,              // Password minimun lenght
-      requireOneAlpha: true,            // enforce the use of at least 1 char [a-z] while building the password
-      requireOneDigit: true,            // enforce the use of at least 1 digit while building the password
-      extraSignUpFields: [{             // Add extra signup fields on the signup page
+      logo: 'logo.png',                          // if set displays logo above sign-in options
+      privacyUrl: '/privacy-policy',             // if set adds link to privacy policy and 'you agree to ...' on sign-up page
+      termsUrl: '/terms-of-use',                 // if set adds link to terms  'you agree to ...' on sign-up page
+      homeRoute: '/',                            // mandatory - path to redirect to after sign-out
+      dashboardRoute: '/dashboard',              // mandatory - path to redirect to after successful sign-in
+      profileRoute: 'profile',                   // if set adds link to User Profile
+      passwordSignupFields: 'EMAIL_ONLY',        // 
+      showSignupCode: true,                      // when true you need to set the 'signupCode' setting in the server (see below)
+      showOtherLoginServices: true,              // Set to false to hide oauth login buttons on the signin/signup pages. Useful if you are using something like accounts-meld or want to oauth for api access
+      passwordminLength: 7,                      // Password minimun lenght
+      requireOneAlpha: true,                     // enforce the use of at least 1 char [a-z] while building the password
+      requireOneDigit: true,                     // enforce the use of at least 1 digit while building the password
+      requirePasswordConfirmation: true,         // enforce user to confirm password on signUp and resetPassword templates
+      extraSignUpFields: [{                      // Add extra signup fields on the signup page
         field: "name",                           // The database property you want to store the data in
         name: "This Will Be The Initial Value",  // An initial value for the field, if you want one
         label: "Full Name",                      // The html lable for the field

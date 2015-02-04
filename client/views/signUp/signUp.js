@@ -66,14 +66,22 @@ AccountsEntry.entrySignUpEvents = {
     extraFields = _.pluck(AccountsEntry.settings.extraSignUpFields, 'field');
     filteredExtraFields = _.pick(formValues, extraFields);
 
-    password = t.find('input[type="password"]').value;
+    password = t.find('input[name="password1"]').value;
+    
     fields = AccountsEntry.settings.passwordSignupFields;
     passwordErrors = (function(password) {
-      var errMsg, msg, minLength;
+      var errMsg, msg, minLength, password2;
       errMsg = [];
       msg = false;
 
       minLength = AccountsEntry.settings.minLength !== null ? AccountsEntry.settings.minLength : 7;
+      
+      if (AccountsEntry.settings.requirePasswordConfirmation) {
+        password2 = $('input[name="password2"]').val();
+        if (password !== password2) {
+          errMsg.push(i18n("error.pwNoMatch"));
+        }
+      }
 
       if (password.length < minLength) {
         errMsg.push(i18n("error.minChar"));

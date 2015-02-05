@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Make signin and signout their own pages with routes (in javascript)",
-  version: '0.3.2',
+  version: '0.3.3',
   name: "selaias:accounts-entry",
   githubUrl: 'https://github.com/selaias/accounts-entry',
 });
@@ -50,7 +50,6 @@ Package.onUse(function(api) {
   api.use([
     'deps',
     'service-configuration',
-    'accounts-password',
     'accounts-base',
     'underscore'], 'server');
 
@@ -58,7 +57,6 @@ Package.onUse(function(api) {
 
   // CLIENT and SERVER
   api.imply('accounts-base', ['client', 'server']);
-  api.imply('accounts-password', ['client', 'server']);
 
   api.export('AccountsEntry', ['client', 'server']);
   api.export('SimpleForm', ['client', 'server']);

@@ -59,7 +59,7 @@ Here is an Iron-Router route example:
 
 ## Setting up password login
 
-Use `mrt add accounts-password` if you want to have email/username login authentication options. This is now optional and will only display if installed. You need to configure an OAuth option if you choose not to have password logins.
+Use `meteor add accounts-password` if you want to have email/username login authentication options. This is now optional and will only display if installed. You need to configure an OAuth option if you choose not to have password logins.
 
 ## Setting up OAuth/social integrations
 

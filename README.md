@@ -35,6 +35,7 @@ You will get routes and the necessary templates for:
 /sign-out
 /sign-up
 /forgot-password
+/verification-pending
 ```
 
 
@@ -94,6 +95,7 @@ Since this is a young package, we are maintaining compatibility with accounts-ui
       requireOneAlpha: true,                     // enforce the use of at least 1 char [a-z] while building the password
       requireOneDigit: true,                     // enforce the use of at least 1 digit while building the password
       requirePasswordConfirmation: true,         // enforce user to confirm password on signUp and resetPassword templates
+      waitEmailVerification: true                // Set to true to wait until newly created user's email has been verified. 
       extraSignUpFields: [{                      // Add extra signup fields on the signup page
         field: "name",                           // The database property you want to store the data in
         name: "This Will Be The Initial Value",  // An initial value for the field, if you want one

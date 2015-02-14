@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Make signin and signout their own pages with routes (in javascript)",
-  version: '0.3.3',
+  version: '0.4.0',
   name: "selaias:accounts-entry",
   githubUrl: 'https://github.com/selaias/accounts-entry',
 });
@@ -39,6 +39,8 @@ Package.onUse(function(api) {
     'client/views/forgotPassword/forgotPassword.js',
     'client/views/resetPassword/resetPassword.html',
     'client/views/resetPassword/resetPassword.js',
+    'client/views/verifyEmail/emailVerificationPending.html',
+    'client/views/verifyEmail/emailVerificationPending.js',
     'client/views/social/social.html',
     'client/views/social/social.js',
     'client/views/accountButtons/accountButtons.html',

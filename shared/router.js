@@ -94,6 +94,16 @@ Router.route('entryResetPassword', {
   }
 });
 
+Router.route('entryEmailVerificationPending', {
+  path: '/verification-pending',
+  name: 'entryEmailVerificationPending',
+  template: 'entryEmailVerificationPending',
+  onBeforeAction: function() {
+    Alerts.clear();
+    this.next();
+  }
+});
+
 exclusions = [];
 
 _.each(Router.routes, function(route) {

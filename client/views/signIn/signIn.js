@@ -35,6 +35,7 @@ AccountsEntry.entrySignInEvents = {
     }
     Session.set('email', email);
     Session.set('password', $('input[name="password"]').val());
+
     Meteor.loginWithPassword(Session.get('email'), Session.get('password'), function(error) {
       Session.set('password', null);
       if (error) {

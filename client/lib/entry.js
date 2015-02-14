@@ -11,9 +11,11 @@ AccountsEntry = {
     emailToLower: true,
     usernameToLower: false,
     entrySignUp: '/sign-up',
+    emailVerificationPendingRoute: '/verification-pending',
     extraSignUpFields: [],
     showOtherLoginServices: true,
     requirePasswordConfirmation: true,
+    waitEmailVerification: true
   },
   isStringEmail: function(email) {
     var emailPattern;
@@ -41,19 +43,9 @@ AccountsEntry = {
       extraCondition = true;
     }
     if (!Meteor.user()){
-        Session.set('fromWhere', router.url);
-        Router.go('entrySignIn');
-        Session.set('entryError', i18n('error.signInRequired'));
+      Session.set('fromWhere', router.url);
+      Router.go('entrySignIn');
+      Session.set('entryError', i18n('error.signInRequired'));
     }
-//     if (!Meteor.loggingIn()) {
-//       if (Meteor.user() && extraCondition) {
-//         router.next();
-//       } else {
-//         Session.set('fromWhere', router.url);
-//         router.render('entrySignIn');
-//         Session.set('entryError', i18n('error.signInRequired'));
-// //        router.next();
-//       }
-//     }
   }
 };

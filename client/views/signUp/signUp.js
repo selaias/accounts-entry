@@ -41,7 +41,8 @@ AccountsEntry.entrySignUpHelpers = {
   },
   emailAddress: function() {
     return Session.get('email');
-  }
+  },
+
 };
 
 AccountsEntry.entrySignUpEvents = {
@@ -67,7 +68,7 @@ AccountsEntry.entrySignUpEvents = {
     filteredExtraFields = _.pick(formValues, extraFields);
 
     password = t.find('input[name="password1"]').value;
-    
+
     fields = AccountsEntry.settings.passwordSignupFields;
     passwordErrors = (function(password) {
       var errMsg, msg, minLength, password2;
@@ -75,7 +76,7 @@ AccountsEntry.entrySignUpEvents = {
       msg = false;
 
       minLength = AccountsEntry.settings.minLength !== null ? AccountsEntry.settings.minLength : 7;
-      
+
       if (AccountsEntry.settings.requirePasswordConfirmation) {
         password2 = $('input[name="password2"]').val();
         if (password !== password2) {
@@ -142,16 +143,21 @@ AccountsEntry.entrySignUpEvents = {
           }
           isEmailSignUp = _.contains(['USERNAME_AND_EMAIL', 'EMAIL_ONLY'], AccountsEntry.settings.passwordSignupFields);
           userCredential = isEmailSignUp ? email : username;
-          Meteor.loginWithPassword(userCredential, password, function(error) {
-            if (error) {
-              Alerts.add(error.reason, 'danger');
-            } else if (Session.get('fromWhere')) {
-              Router.go(Session.get('fromWhere'));
-              Session.set('fromWhere', null);
-            } else {
-              Router.go(AccountsEntry.settings.dashboardRoute);
-            }
-          });
+          if (AccountsEntry.settings.waitEmailVerification === true && isEmailSignUp) {
+            Router.go(AccountsEntry.settings.emailVerificationPendingRoute);
+          }
+          else {
+            Meteor.loginWithPassword(userCredential, password, function(error) {
+              if (error) {
+                Alerts.add(error.reason, 'danger');
+              } else if (Session.get('fromWhere')) {
+                Router.go(Session.get('fromWhere'));
+                Session.set('fromWhere', null);
+              } else {
+                Router.go(AccountsEntry.settings.dashboardRoute);
+              }
+            });
+          }
         });
       } else {
         Alerts.add(i18n("error.signupCodeIncorrect"), 'danger');

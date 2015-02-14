@@ -29,11 +29,14 @@ var en = {
   and: "and",
   "Match failed": "Match failed",
   "User not found": "User not found",
+  verificationPending: "Confirm your email address",
+  verificationPendingDetails: "A confirmation email has been sent to the email address you provided. Click on the confirmation link in the email to activate your account.",
   info:{
     emailSent: "Email sent",
     emailVerified: "Email verified",
     passwordChanged: "Password changed",
     passwordReset: "Password reset",
+
   },
   error: {
     minChar: "7 character minimum password.",
@@ -45,7 +48,8 @@ var en = {
     signupCodeRequired: "Registration code is required.",
     signupCodeIncorrect: "Registration code is incorrect.",
     signInRequired: "You must be signed in to do that.",
-    usernameIsEmail: "Username cannot be an email address."
+    usernameIsEmail: "Username cannot be an email address.",
+    emailNotVerified: "Please verify your email address first!"
   }
 };
 

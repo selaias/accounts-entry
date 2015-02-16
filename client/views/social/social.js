@@ -18,6 +18,15 @@ Template.entrySocial.helpers({
       return true;
     }
   },
+  isSocial: function(){
+    var s = this.toString();
+    console.log(s)
+    if(s=='strava' || s=='runkeeper' || s=='underArmour'){
+      return false
+    }else{
+      return true
+    }
+  },
   icon: function() {
     switch (this.toString()) {
       case 'google':

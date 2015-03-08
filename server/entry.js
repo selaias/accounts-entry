@@ -6,30 +6,42 @@ Meteor.startup(function() {
   AccountsEntry = {
     settings: {},
     config: function(appConfig) {
-      return this.settings || _.extend(this.settings, appConfig);
+      this.settings = _.extend(this.settings, appConfig);
     }
   };
   this.AccountsEntry = AccountsEntry;
 
-//   Accounts.validateLoginAttempt(function(attemptInfo) {
+  Accounts.validateLoginAttempt(function(attemptInfo) {
 
-//     if (attemptInfo.type == 'resume') return true;
+    var requirePasswordConfirmation = AccountsEntry.settings.requirePasswordConfirmation || false;
 
-//     if (attemptInfo.methodName == 'createUser') return false;
+    if ( requirePasswordConfirmation === true){
 
-//     if (attemptInfo.methodName == 'login' && attemptInfo.allowed) {
+      if (attemptInfo.type == 'resume') {
+        return true;
+      } 
 
-//       var verified = false;
-//       var email = attemptInfo.methodArguments[0].user.email;
-//       attemptInfo.user.emails.forEach(function(value, index) {
-//         if (email == value.address && value.verified) verified = true;
-//       });
-//       if (!verified) throw new Meteor.Error(403, 'Verify Email first!');
-//     }
+      if (attemptInfo.methodName == 'createUser') {
+        return false;
+      } 
 
-//     return true;
-//   });
-  
+      if (attemptInfo.methodName == 'login' && attemptInfo.allowed) {
+
+        var verified = false;
+        var email = attemptInfo.methodArguments[0].user.email;
+        attemptInfo.user.emails.forEach(function(value, index) {
+          if (email == value.address && value.verified) {
+            verified = true;
+          }
+        });
+        if (!verified) {
+          throw new Meteor.Error(403, 'Verify Email first!');
+        }
+      }
+    }
+    return true;
+  });
+
 });
 Meteor.methods({
   entryValidateSignupCode: function(signupCode) {

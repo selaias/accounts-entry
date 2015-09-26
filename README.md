@@ -20,10 +20,15 @@ accounts-entry is presently compatible with Iron Router 1.0.0 and above. Since m
 
 Run:
 
+For Meteor 1.2.0.1 version
 ```
 meteor add selaias:accounts-entry
 ```
 
+For 1.1.0.3 and below 
+```
+meteor add selaias:accounts-entry@=0.5.0
+```
 You can install the `accounts-ui` package, as it is still used for OAuth setup.
 
 ## Provided routes
